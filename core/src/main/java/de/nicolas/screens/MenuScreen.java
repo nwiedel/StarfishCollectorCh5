@@ -2,8 +2,12 @@ package de.nicolas.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import de.nicolas.utils.actors.BaseActor;
 import de.nicolas.StarfishGame;
+import de.nicolas.utils.game.BaseGame;
 import de.nicolas.utils.screens.BaseScreen;
 
 public class MenuScreen extends BaseScreen {
@@ -15,13 +19,34 @@ public class MenuScreen extends BaseScreen {
 
         BaseActor title = new BaseActor(0, 0, mainStage);
         title.loadTexture("assets/starfish-collector.png");
-        title.centerAtPosition(400,300);
-        title.moveBy(0, 100);
 
-        BaseActor start = new BaseActor(0, 0, mainStage);
-        start.loadTexture("assets/message-start.png");
-        start.centerAtPosition(400, 300);
-        start.moveBy(0, -100);
+        TextButton startButton = new TextButton("Start", BaseGame.textButtonStyle);
+        startButton.addListener(
+            (Event e) -> {
+                if (!(e instanceof InputEvent) ||
+                    !((InputEvent)e).getType().equals(InputEvent.Type.touchDown)){
+                    return false;
+                }
+                StarfishGame.setActiveScreen(new LevelScreen());
+                return false;
+            }
+        );
+        TextButton quitButton = new TextButton("Quit", BaseGame.textButtonStyle);
+        quitButton.addListener(
+            (Event e) -> {
+                if (!(e instanceof InputEvent) ||
+                    !((InputEvent)e).getType().equals(InputEvent.Type.touchDown)){
+                    return false;
+                }
+                Gdx.app.exit();
+                return false;
+            }
+        );
+
+        uiTable.add(title).colspan(2);
+        uiTable.row();
+        uiTable.add(startButton);
+        uiTable.add(quitButton);
     }
 
     @Override
@@ -32,37 +57,13 @@ public class MenuScreen extends BaseScreen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public boolean keyDown(int i) {
+    public boolean keyDown(int keyCode) {
+        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+            StarfishGame.setActiveScreen(new LevelScreen());
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            Gdx.app.exit();
+        }
         return false;
     }
 

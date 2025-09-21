@@ -1,5 +1,6 @@
 package de.nicolas.screens;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -53,8 +54,6 @@ public class LevelScreen extends BaseScreen {
 
         starfishLabel = new Label("Starfish Left:", BaseGame.labelStyle);
         starfishLabel.setColor(Color.CYAN);
-        starfishLabel.setPosition(20, 520);
-        uiStage.addActor(starfishLabel);
 
         ButtonStyle buttonStyle = new ButtonStyle();
 
@@ -64,8 +63,6 @@ public class LevelScreen extends BaseScreen {
 
         Button restartButton = new Button(buttonStyle);
         restartButton.setColor(Color.CYAN);
-        restartButton.setPosition(720, 520);
-        uiStage.addActor(restartButton);
 
         restartButton.addListener(
             (Event e) ->{
@@ -77,6 +74,11 @@ public class LevelScreen extends BaseScreen {
                 return false;
             }
         );
+
+        uiTable.pad(10);
+        uiTable.add(starfishLabel).top();
+        uiTable.add().expandX().expandY();
+        uiTable.add(restartButton).top();
     }
 
     @Override
@@ -115,39 +117,7 @@ public class LevelScreen extends BaseScreen {
     }
 
     @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-
-    @Override
-    public boolean keyDown(int i) {
-        return false;
-    }
+    public boolean keyDown(int i) {return false; }
 
     @Override
     public boolean keyUp(int i) {
@@ -160,9 +130,7 @@ public class LevelScreen extends BaseScreen {
     }
 
     @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
-        return false;
-    }
+    public boolean touchDown(int i, int i1, int i2, int i3) { return false; }
 
     @Override
     public boolean touchUp(int i, int i1, int i2, int i3) {
@@ -180,9 +148,7 @@ public class LevelScreen extends BaseScreen {
     }
 
     @Override
-    public boolean mouseMoved(int i, int i1) {
-        return false;
-    }
+    public boolean mouseMoved(int i, int i1) { return false; }
 
     @Override
     public boolean scrolled(float v, float v1) {

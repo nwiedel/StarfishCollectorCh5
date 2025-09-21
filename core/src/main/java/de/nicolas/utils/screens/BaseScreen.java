@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public abstract class BaseScreen implements Screen, InputProcessor {
@@ -12,9 +13,15 @@ public abstract class BaseScreen implements Screen, InputProcessor {
     protected Stage mainStage;
     protected Stage uiStage;
 
+    protected Table uiTable;
+
     public BaseScreen(){
         uiStage = new Stage();
         mainStage = new Stage();
+
+        uiTable = new Table();
+        uiTable.setFillParent(true);
+        uiStage.addActor(uiTable);
 
         initialize();
     }
@@ -29,6 +36,9 @@ public abstract class BaseScreen implements Screen, InputProcessor {
         im.addProcessor(this);
         im.addProcessor(uiStage);
         im.addProcessor(mainStage);
+        for (InputProcessor ip : im.getProcessors()){
+            System.out.println(ip.toString());
+        }
     }
 
     @Override
@@ -51,4 +61,13 @@ public abstract class BaseScreen implements Screen, InputProcessor {
         im.removeProcessor(uiStage);
         im.removeProcessor(mainStage);
     }
+
+    // Methhoden, die vom Screen Interface benötigt werden
+    public void resize(int width, int height) {  }
+
+    public void pause()   {  }
+
+    public void resume()  {  }
+
+    public void dispose() {  }
 }
