@@ -6,11 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import de.nicolas.StarfishGame;
-import de.nicolas.actors.Rock;
-import de.nicolas.actors.Starfish;
-import de.nicolas.actors.Turtle;
-import de.nicolas.actors.Whirlpool;
+import de.nicolas.actors.*;
 import de.nicolas.utils.actors.BaseActor;
+import de.nicolas.utils.actors.DialogBox;
 import de.nicolas.utils.game.BaseGame;
 import de.nicolas.utils.screens.BaseScreen;
 
@@ -30,6 +28,8 @@ public class LevelScreen extends BaseScreen {
     private boolean win;
 
     private Label starfishLabel;
+
+    private DialogBox dialogBox;
 
     @Override
     public void initialize() {
@@ -75,10 +75,27 @@ public class LevelScreen extends BaseScreen {
             }
         );
 
+        Sign sign1 = new Sign(20, 400, mainStage);
+        sign1.setText("Westliche Starfish Bay");
+
+        Sign sign2 = new Sign(600, 300, mainStage);
+        sign2.setText("Östliche Starfish Bay");
+
+        dialogBox = new DialogBox(0, 0, uiStage);
+        dialogBox.setBackgroundColor(Color.TAN);
+        dialogBox.setFontColor(Color.BROWN);
+        dialogBox.setDialogSize(600, 100);
+        dialogBox.setFontScale(0.8F);
+        dialogBox.alignCenter();
+        dialogBox.setVisible(false);
+
         uiTable.pad(10);
         uiTable.add(starfishLabel).top();
         uiTable.add().expandX().expandY();
         uiTable.add(restartButton).top();
+
+        uiTable.row();
+        uiTable.add(dialogBox).colspan(3);
     }
 
     @Override
@@ -114,6 +131,23 @@ public class LevelScreen extends BaseScreen {
         }
 
         starfishLabel.setText("Starfish Left: " + BaseActor.count(mainStage, "de.nicolas.actors.Starfish"));
+
+        for (BaseActor signActor : BaseActor.getList(mainStage,"de.nicolas.actors.Sign" )){
+            Sign sign = (Sign)signActor;
+            turtle.preventOverlap(sign);
+            boolean nearby = turtle.isWithinDistance(4, sign);
+
+            if (nearby && !sign.isViewing()){
+                dialogBox.setText(sign.getText());
+                dialogBox.setVisible(true);
+                sign.setViewing(true);
+            }
+            if (sign.isViewing() && !nearby){
+                dialogBox.setText(" ");
+                dialogBox.setVisible(false);
+                sign.setViewing(false);
+            }
+        }
     }
 
     @Override
