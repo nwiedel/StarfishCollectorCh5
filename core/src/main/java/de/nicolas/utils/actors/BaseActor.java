@@ -315,7 +315,7 @@ public class BaseActor extends Group {
     }
 
     /**
-     * Die Methode sorgt dafür, dass das Raumschiff, wenn ess
+     * Die Methode sorgt dafür, dass der Actor, wenn er
      * den sichtbaren Bereich verlässt, auf der anderen Seite wieder
      * erscheint
      */
@@ -436,6 +436,13 @@ public class BaseActor extends Group {
      */
     public static void setWorldBounds(BaseActor baseActor){
         setWorldBounds(baseActor.getWidth(), baseActor.getHeight());
+    }
+
+    /**
+     * gibt die Weltgrenzen zurück
+     */
+    public static Rectangle getWorldBounds(){
+        return worldBounds;
     }
 
     /**
