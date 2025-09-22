@@ -1,6 +1,7 @@
 package de.nicolas.screens;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import de.nicolas.utils.actions.Scene;
 import de.nicolas.utils.actors.BaseActor;
 import de.nicolas.utils.actors.DialogBox;
@@ -24,6 +25,19 @@ public class StoryScreen extends BaseScreen {
 
         DialogBox dialogBox = new DialogBox(0, 0, uiStage);
         dialogBox.setSize(600, 200);
+        dialogBox.setBackgroundColor(new Color(0.6f, 0.6f, 0.8f, 1f));
+        dialogBox.setFontScale(0.75f);
+        dialogBox.setVisible(false);
+
+        uiTable.add(dialogBox). expandX().expandY().bottom();
+
+        continueKey = new BaseActor(0, 0, uiStage);
+        continueKey.loadTexture("assets/key-C.png");
+        continueKey.setSize(32, 32);
+        continueKey.setVisible(false);
+
+        dialogBox.addActor(continueKey);
+        continueKey.setPosition(dialogBox.getWidth(), - continueKey.getWidth(), 0);
         
     }
 
