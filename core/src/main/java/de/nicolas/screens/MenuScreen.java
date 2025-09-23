@@ -27,7 +27,7 @@ public class MenuScreen extends BaseScreen {
                     !((InputEvent)e).getType().equals(InputEvent.Type.touchDown)){
                     return false;
                 }
-                StarfishGame.setActiveScreen(new LevelScreen());
+                StarfishGame.setActiveScreen(new StoryScreen());
                 return false;
             }
         );
@@ -51,17 +51,14 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void update(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.S)){
-            StarfishGame.setActiveScreen(new LevelScreen());
-        }
     }
 
     @Override
     public boolean keyDown(int keyCode) {
-        if (Gdx.input.isKeyPressed(Input.Keys.ENTER)){
-            StarfishGame.setActiveScreen(new LevelScreen());
+        if (keyCode == Input.Keys.ENTER){
+            StarfishGame.setActiveScreen(new StoryScreen());
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+        if (keyCode == Input.Keys.ESCAPE){
             Gdx.app.exit();
         }
         return false;
